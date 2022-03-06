@@ -1,7 +1,7 @@
-var w = 500;
+var w = 1000;
 var h = 500;
 var rad = 20;
-var leftMargin = rad;
+var leftMargin = rad*2;
 
 
 var svg = d3.select("svg")
@@ -10,77 +10,25 @@ var svg = d3.select("svg")
 			.style("background-color","black")
 
 var arrData = [1, 10, 17, 28];
-
 var min = d3.min(arrData);
 var max = d3.max(arrData);
 
 var xScale = d3.scaleLinear()
 				.domain([min, max])
-				.range([leftMargin*2, w-leftMargin*2]);
-
-var rotationScale = d3.scaleLinear()
-				.domain([min, max])
-				.range([0, 360]);
-
-var gElements = svg.selectAll('g')
+				.range([leftMargin, w-leftMargin]);
+var rects = svg
+	.selectAll('rect')
 	.data(arrData)
-	.join('g')
+	.join('rect')
+	.attr('x', 0)
+	.attr('y', 0)
+	.attr('width', rad)
+	.attr('height', rad)
+	.attr('fill', 'none')
+	.attr('stroke','magenta')
     .attr('transform' , function(d){
-    	return 'translate('+xScale(d)+',' +h/2+')'
-    });
-
-
-	gElements.append('circle')
-		.attr('cx',0)
-		.attr('cy',0)
-		.attr('r',function(d){
-			return d;
-		})
-		.attr('fill',function(d){
-			return 'rgb('+d+',100,100)';
-		})
-		.attr('opacity',.7);
-	gElements.append('rect')
-		.attr('x', 0)
-		.attr('y', 0)
-		.attr('width', rad)
-		.attr('height', rad)
-		.attr('fill', 'none')
-		.attr('stroke','magenta')
-		.attr('transform',function(d,i){
-			return 'rotate('+rotationScale(d)+')'
-		});
-
-// var rects = svg
-// 	.selectAll('rect')
-// 	.data(arrData)
-// 	.join('rect')
-// 	.attr('x', 0)
-// 	.attr('y', 0)
-// 	.attr('width', rad)
-// 	.attr('height', rad)
-// 	.attr('fill', 'none')
-// 	.attr('stroke','magenta')
-//     .attr('transform' , function(d){
-//     	return 'translate('+xScale(d)+',' +h/2+') rotate(15)'
-//     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    	return 'translate('+xScale(d)+',' +h/2+') rotate(15)'
+    })
 
 
 
@@ -120,18 +68,45 @@ var gElements = svg.selectAll('g')
 // 					.domain([min, max])
 // 					.range([leftMargin, w-leftMargin]);
 
-// 	var fruitRects = svg
-// 		.selectAll('rect')
+
+// 	var rotationScale = d3.scaleLinear()
+// 					.domain([0, fruitQuant.length])
+// 					.range([0, 360]);
+
+
+// 	var seqScale = d3.scaleSequential()
+// 					  		.domain([0, 100])
+// 					  		.interpolator(d3.interpolateRainbow);
+
+
+
+// 	var gElements = svg.selectAll('g')
 // 		.data(fruitQuant)
-// 		.join('rect')
-// 		.attr('x', function(d,i){
-// 			return xScale(d.quant);
+// 		.join('g')
+// 	    .attr('transform' , function(d){
+// 	    	return 'translate('+xScale(d.quant)+',' +h/2+')'
+// 	    });
+
+
+// 	gElements.append('circle')
+// 		.attr('cx',0)
+// 		.attr('cy',0)
+// 		.attr('r', rad)
+// 		.attr('fill',function(d){
+// 			return seqScale(d.del);
 // 		})
-// 		.attr('y', h/2)
+// 		.attr('stroke', function(d){
+// 			return ordinalScale(d.color)
+// 		})
+// 		.attr('opacity',.7);
+// 	gElements.append('rect')
+// 		.attr('x', 0)
+// 		.attr('y', 0)
 // 		.attr('width', rad)
 // 		.attr('height', rad)
-// 		.attr('opacity',.5)
-// 		.attr('fill', function(d){
-// 			return ordinalScale(d.fruit);
-// 		})
+// 		.attr('fill', 'none')
+// 		.attr('stroke','white')
+// 		.attr('transform',function(d,i){
+// 			return 'rotate('+rotationScale(i)+')'
+// 		});
 // }

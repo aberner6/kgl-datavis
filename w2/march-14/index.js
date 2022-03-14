@@ -1,5 +1,5 @@
-var w = 500;
-var h = 500;
+var w = 1000;
+var h = 1000;
 var rad = 20;
 var leftMargin = rad;
 
@@ -8,6 +8,79 @@ var svg = d3.select("svg")
 			.attr("width",w)
 			.attr("height",h)
 			.style("background-color","black")
+
+var skyData = [
+	{"day":"monday", "sky":100},
+	{"day":"tuesday", "sky":40},
+	{"day":"wednesday", "sky":80},
+	{"day":"thursday", "sky":70},
+	{"day":"friday", "sky":100},
+	{"day":"saturday", "sky":90},
+	{"day":"sunday", "sky":90},
+	{"day":"monday", "sky":100},
+	{"day":"tuesday", "sky":1}
+];
+
+var xScale = d3.scaleLinear()
+	.domain([0,skyData.length])
+	.range([20, w])
+
+
+var dayScale = d3.scaleOrdinal()
+	.domain(["monday", "tuesday", "wednesday","thursday","friday","saturday","sunday"])
+	.range(["red","blue","orange","purple","pink","beige","brown"])
+
+var minSky = d3.min(skyData, function(d){
+	return d.sky;
+})
+var maxSky = d3.max(skyData, function(d){
+	return d.sky;
+})
+
+var radScale = d3.scaleLinear()
+	.domain([minSky, maxSky])
+	.range([10, 20])
+
+var blueScale = d3.scaleLinear()
+	.domain([minSky, maxSky])
+	.range([0,255])
+
+var skyCirc = svg.selectAll(".skyCirc")
+	.data(skyData)
+	.join("circle")
+	.attr("cx", function(d,i){
+		return xScale(i)
+	})
+	.attr("cy", h/2)
+	.attr("r", function(d){
+		return radScale(d.sky);
+	})
+	.attr("stroke",function(d){
+		return dayScale(d.day)
+	})
+	.attr("fill", function(d){
+		return 'rgb(0,0,'+blueScale(d.sky)+')'
+	})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ////LINEAR SCALES
 // var arrData = [1, 10, 17, 28];

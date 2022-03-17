@@ -33,6 +33,7 @@ var maxDay = d3.max(imgData, function(d){
 var dayScale = d3.scaleLinear()
 	.domain([minDay, maxDay])
 	.range([imgW, w-imgW*2])
+
 d3.select('svg')
     .selectAll('image')
     .data(imgData)
@@ -46,5 +47,20 @@ d3.select('svg')
 	.attr("xlink:href", function(d){
 		return d.img;
 	})
+
+
+var labels = svg
+  .selectAll('.labels')
+  .data(imgData)
+  .join('text')
+  .attr('class','labels')
+  .attr('x', function(d){
+    return dayScale(d.day)
+  })
+  .attr('y', h/2)
+  .text(function(d){
+    return d.day;
+  })
+  .attr('fill','white')
 
 

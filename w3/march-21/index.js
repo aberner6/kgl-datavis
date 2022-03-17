@@ -9,28 +9,6 @@ var svg = d3.select("svg")
 			.attr("height",h)
 			.style("background-color","black")
 
-// var arrData = [1, 10, 17, 28];
-// var min = d3.min(arrData);
-// var max = d3.max(arrData);
-
-// var xScale = d3.scaleLinear()
-// 				.domain([min, max])
-// 				.range([leftMargin, w-leftMargin]);
-
-// var circs = svg
-// 	.selectAll('circle')
-// 	.data(arrData)
-// 	.join('circle')
-// 	.attr('cx', w/2)
-// 	.attr('cy', h/2)
-// 	.attr('r', 0)
-// 	.attr('fill','white')
-// 	.transition()
-// 	.attr('r',100)
-
-
-
-
 
 
 

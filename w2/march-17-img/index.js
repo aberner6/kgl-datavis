@@ -1,7 +1,7 @@
-var w = 1000;
-var h = 500;
+var w = 1400;
+var h = 800;
 var rad = 20;
-var leftMargin = rad*2;
+var leftMargin = rad*3;
 var imgW = rad*4;
 var imgH = rad*4;
 var svg = d3.select("svg")
@@ -42,8 +42,8 @@ d3.select('svg')
     	return dayScale(d.day);
     })
     .attr('y', h/2)
-    .attr('width', imgW)
-    .attr('height', imgH)
+    .attr('width', imgW*2)
+    .attr('height', imgH*2)
 	.attr("xlink:href", function(d){
 		return d.img;
 	})

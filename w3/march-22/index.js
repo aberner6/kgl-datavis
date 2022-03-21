@@ -14,12 +14,14 @@ var svg = d3.select("svg")
 var skyData = [];
 d3.json("sky.json").then(function(data) {
      skyData = data;
-     draw();
+     drawRadialLine();
 });
 
-var lineMaker = d3.line();
 
-function draw(){
+//OPTION 1
+var lineMaker = d3.line();
+    // .curve(d3.curveCardinal);
+function drawLine(){
   var xScale = d3.scaleLinear().domain([0, skyData.length]).range([0, w]);
   var yScale = d3.scaleLinear().domain([0, 100]).range([h, 0]);
 
@@ -42,46 +44,81 @@ function draw(){
 
 
 
+d3.select("#slider").on("input", function() {
+  update(+this.value);
+});
+
+//OPTION 2
+var myPath;
+var radialLineMaker = d3.radialLine();
+function drawRadialLine(){
+  var circScale = d3.scaleLinear()
+    .domain([0, skyData.length])
+    .range([0, Math.PI*2]);
+
+  radialLineMaker
+    .angle(function(d,i) {
+      return circScale(i);
+    })
+    .radius(function(d) {
+      return d.sky;
+    });
+
+  var radialLineData = radialLineMaker(skyData);
+
+  myPath = svg
+    .append('path')
+    .attr('transform','translate('+w/2+','+h/2+')')
+    .attr('d', radialLineData)
+    .attr('stroke','white')
+}
+
+  
+function update(val){
+  var circScale = d3.scaleLinear()
+    .domain([0, skyData.length])
+    .range([0, Math.PI*2]);
+
+  radialLineMaker
+    .angle(function(d,i) {
+      return circScale(i);
+    })
+    .radius(function(d) {
+      return val;
+    });
+  var radialLineData = radialLineMaker(skyData);
+
+  myPath
+    .attr('d', radialLineData)
+    .attr('stroke','white')
+}
 
 
-// var minDay = d3.min(imgData, function(d){
-//  return d.day;
-// })
-// var maxDay = d3.max(imgData, function(d){
-//  return d.day;
-// })
-// var dayScale = d3.scaleLinear()
-//  .domain([minDay, maxDay])
-//  .range([imgW, w-imgW*2])
 
 
+//OPTION 3
+// var radialLineGenerator = d3.radialLine();
 
+// var r1 = 15;
+// var r2 = 6;
 
-// var data = [];
+// var radialpoints = [
+// [0, r1],
+// [Math.PI * 0.2, r2],
+// [Math.PI * 0.4, r1],
+// [Math.PI * 0.6, r2],
+// [Math.PI * 0.8, r1],
+// [Math.PI * 1, r2],     
+// [Math.PI * 1.2, r1],
+// [Math.PI * 1.4, r2],
+// [Math.PI * 1.6, r1],
+// [Math.PI * 1.8, r2],
+// [Math.PI * 2, r1]
+// ];
 
-// svg.on("click", function(){
-//  updateData();
-//  updateVis();
-// })
-
-// function updateData() {
-//   data = []; //empty the data
-//   for(var i=0; i<5; i++) {
-//     data.push(Math.random()*w);
-//   }
-// }
-// function updateVis() {
-//   d3.select('svg')
-//     .selectAll('circle')
-//     .data(data)
-//     .join('circle')
-//     .attr('cy', h/2)
-//     .attr('r', rad)
-//     .attr('fill','white')
-//     .transition()
-//     .duration(4000)
-//     .attr('cx', function(d) {
-//       return d;
-//     });
-// }
-
+// var radialData = radialLineGenerator(radialpoints);
+// var radial = svg.append("path")
+//   .attr('transform','translate('+w/2+','+h/2+')')
+//   .attr("class", "radial")
+//   .attr("d", radialData)
+//   .attr("stroke","white")

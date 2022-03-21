@@ -4,13 +4,56 @@ var rad = 20;
 var leftMargin = rad*2;
 var imgW = rad*4;
 var imgH = rad*4;
+
 var svg = d3.select("svg")
 			.attr("width",w)
 			.attr("height",h)
 			.style("background-color","black")
 
 
+// var wholeData = [0,3,5,10,13,15,20,23,25];
 
+// var maxData =  d3.max(wholeData);
+// var xScale = d3.scaleLinear()
+//   .domain([0,maxData])
+//   .range([leftMargin, w-leftMargin])
+
+// canvas
+//   .on('click',function(){
+//     secondTransition();
+//   })
+
+// var circs = canvas
+//     .selectAll('.circle')
+//     .data(wholeData)
+//     .join('circle')
+//     .attr('cy', h/2)
+//     .attr('r', rad)
+//     .attr('cx',w/2)
+//     .attr('fill','white')
+//     .on('mouseover',function(){
+//       firstTransition()
+//     })
+
+// function firstTransition(){
+//   circs
+//     .transition()
+//     .ease(d3.easeBounceOut)
+//     .duration(4000)
+//     .attr('cx', function(d) {
+//       return xScale(d);
+//     })
+// }
+
+// function secondTransition(){
+//   circs
+//     .transition()
+//     .ease(d3.easeLinear)
+//     .duration(4000)
+//     .attr('r',rad*2)
+//     .attr('fill','black')
+//     .attr('stroke','white')
+// }
 
 
 
@@ -46,39 +89,54 @@ var svg = d3.select("svg")
 
 
 
-// var wholeData = [0,3,5,10,13,15,20,23,25];
-// var partData = [];
-// var index = 0;
+var wholeData = [0,3,5,10,13,15,20,23,25];
+var partData = [];
+var index = 0;
+var inc = 3;
 
-// svg.on("click", function(){
-// 	updateData();
-// })
-// var index = 0;
-// var inc = 3;
-// function updateData() {
-// 	partData = []; //empty the data
-// 	for(var i=index; i<index+inc; i++) {
-// 		partData.push(wholeData[i]);
-// 	}
-// 	console.log(partData)
-// 	index = index+inc;
-// 	updateVis();
-// }
-// function updateVis() {
-  // d3.select('svg')
-  //   .selectAll('circle')
-  //   .data(partData)
-  //   .join('circle')
-  //   .attr('cy', h/2)
-  //   .attr('r', rad)
-  //   .attr('fill','white')
-  //   .transition()
-  //   .duration(4000)
-  //   .attr('cx', function(d) {
-  //     return d*10;
-  //   });
-// }
+svg.on("click", function(){
+	updateData();
+})
 
+function updateData() {
+	partData = []; //empty the data
+	for(var i=index; i<index+inc; i++) {
+		partData.push(wholeData[i]);
+	}
+	console.log(partData)
+	index = index+inc;
+	addToVis();
+}
+//JUST PUT NEW DATA IN
+function updateVis() {
+  var circShape = svg
+    .selectAll('circle')
+    .data(partData)
+    .join('circle')
+    .attr('cy', h/2)
+    .transition()
+    .duration(3000)
+    .attr('cx', function(d) {
+      return w/2+(d*10);
+    })
+    .attr('r', rad)
+    .attr('fill','white')
+}
+//ADD NEW DATA TO OLD
+function addToVis() {
+  var circShape = svg
+    .selectAll('.circle')
+    .data(partData)
+    .join('circle')
+    .attr('cy', h/2)
+    .transition()
+    .duration(3000)
+    .attr('cx', function(d) {
+      return w/2+(d*10);
+    })
+    .attr('r', rad)
+    .attr('fill','white')
+}
 
 
 

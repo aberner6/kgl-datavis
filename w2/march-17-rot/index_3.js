@@ -46,9 +46,6 @@ mathias();
 var colorScale2 = d3.scaleOrdinal()
 	.domain(windArray)
 	.range(["blue","teal","lightblue"])
-	// .interpolator(d3.interpolateRainbow);
-
-
 
 var gElements = svg.selectAll("g")
 	.data(skyData)
@@ -72,9 +69,6 @@ gElements
     .attr('fill', function(d){
     	return colorScale2(d.name)
     })
-    // .attr('fill',function(d,i){
-    // 	return 'rgb(0,0,'+colorScale(d.cloud)+')';
-    // })
 
 function mathias(){
 	for (var i = 0; i< skyData.length; i++){

@@ -14,39 +14,36 @@ var svg = d3.select("svg")
 var skyData = [];
 d3.json("sky.json").then(function(data) {
      skyData = data;
+     // drawLine();
      drawRadialLine();
 });
 
 
 //OPTION 1
-var lineMaker = d3.line();
-    // .curve(d3.curveCardinal);
-function drawLine(){
-  var xScale = d3.scaleLinear().domain([0, skyData.length]).range([0, w]);
-  var yScale = d3.scaleLinear().domain([0, 100]).range([h, 0]);
+// var lineMaker = d3.line()
+//     .curve(d3.curveCardinal);
 
-  lineMaker
-    .x(function(d, i) {
-      return xScale(i);
-    })
-    .y(function(d) {
-      return yScale(d.sky);
-    });
+// function drawLine(){
+//   var xScale = d3.scaleLinear().domain([0, skyData.length]).range([0, w]);
+//   var yScale = d3.scaleLinear().domain([0, 100]).range([h-50, 50]);
 
-
-  var lineData = lineMaker(skyData);
-
-  svg
-    .append('path')
-    .attr('d', lineData)
-    .attr('stroke','white')
-}
+//   lineMaker
+//     .x(function(d, i) {
+//       return xScale(i);
+//     })
+//     .y(function(d) {
+//       return yScale(d.sky);
+//     });
 
 
+//   var lineData = lineMaker(skyData);
 
-d3.select("#slider").on("input", function() {
-  update(+this.value);
-});
+//   svg
+//     .append('path')
+//     .attr('d', lineData)
+//     .attr('stroke','white')
+// }
+
 
 //OPTION 2
 var myPath;
@@ -65,6 +62,8 @@ function drawRadialLine(){
     });
 
   var radialLineData = radialLineMaker(skyData);
+  console.log(radialLineData)
+
 
   myPath = svg
     .append('path')
@@ -73,25 +72,29 @@ function drawRadialLine(){
     .attr('stroke','white')
 }
 
-  
-function update(val){
-  var circScale = d3.scaleLinear()
-    .domain([0, skyData.length])
-    .range([0, Math.PI*2]);
+// d3.select("#slider").on("input", function() {
+//   update(+this.value);
+// });
+// var radialLineMaker = d3.radialLine();
 
-  radialLineMaker
-    .angle(function(d,i) {
-      return circScale(i);
-    })
-    .radius(function(d) {
-      return val;
-    });
-  var radialLineData = radialLineMaker(skyData);
+// function update(val){
+//   var circScale = d3.scaleLinear()
+//     .domain([0, skyData.length])
+//     .range([0, Math.PI*2]);
 
-  myPath
-    .attr('d', radialLineData)
-    .attr('stroke','white')
-}
+//   radialLineMaker
+//     .angle(function(d,i) {
+//       return circScale(i);
+//     })
+//     .radius(function(d) {
+//       return val;
+//     });
+//   var radialLineData = radialLineMaker(skyData);
+
+//   myPath
+//     .attr('d', radialLineData)
+//     .attr('stroke','white')
+// }
 
 
 

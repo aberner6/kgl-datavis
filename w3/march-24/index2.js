@@ -11,9 +11,13 @@ var svg = d3.select("body").append("svg")
       .style("background-color","black")
 
 var skyData = [];
-d3.json("sky.json").then(function(data) {
+var nested;
+d3.json("moreData.json").then(function(data) {
      skyData = data;
-     processData();
+      nested = d3.group(data, function(d){
+        return d.day;
+      })
+      draw()
 });
 
 var dayNames = [];
@@ -21,14 +25,6 @@ var xScale = d3.scaleLinear()
 var radScale = d3.scaleLinear()
   .domain([0,100])
   .range([rad/4,rad])
-
-function processData(){
-  for(var i = 0; i<skyData.length; i++){
-    dayNames.push(skyData[i].day)
-  }
-  draw();
-}
-
 
 var numPerRow = 7;
 var size = rad;
@@ -42,45 +38,28 @@ var pageY;
 function draw(){
 
   var g = svg.selectAll('g')
-    .data(skyData)
+    .data(nested)
     .join('g')
     .attr('transform',function(d,i){
+      console.log(d)
       var x = i % numPerRow  
       var y = Math.floor(i / numPerRow)
       return 'translate('+scale(x)+','+scale(y)+')'
     })
 
-  myShape = g
-    .append('circle')
+//here d is the elements of the nested array 
+//so is attaching the array from the property values
+  var circShape = g.selectAll('circle')
+    .data(function(d){
+      return d[1];
+    })
+    .join('circle')
     .attr('cx',0)
     .attr('cy',0)
     .attr('r', function(d){ 
+      console.log(d);
       return radScale(d.sky) 
     })
-    .attr('fill','white')
-    .on("mouseover", function(d) { 
-      var thisData = d.target.__data__;
-      console.log(thisData)
-
-      d3.select(this)
-        .transition()
-        .attr('fill','pink')
-
-      div.transition()    
-        .duration(200)    
-        .style("opacity", .9);    
-      div.html(thisData.sky + "<br/>"+thisData.day) 
-        .style("left", (event.pageX) + "px")   
-        .style("top", (event.pageY - 28) + "px");   
-    })          
-    .on("mouseout", function(d) {  
-      d3.select(this)
-        .transition()
-        .attr('fill','white') 
-      div.transition()    
-        .duration(500)    
-        .style("opacity", 0); 
-    }); 
-
-   
+    .attr('fill','none')
+    .attr('stroke','white')   
 }

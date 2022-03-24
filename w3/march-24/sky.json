@@ -7,6 +7,5 @@
   {"day":"saturday", "sky":90},
   {"day":"sunday", "sky":90},
   {"day":"monday", "sky":100},
-  {"day":"tuesday", "sky":0},
-  {"day":"wednesday", "sky":30}
+  {"day":"tuesday", "sky":0}
 ]

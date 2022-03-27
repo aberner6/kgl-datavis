@@ -45,7 +45,7 @@ d3.json("sky.json").then(function(data) {
 // }
 
 
-//OPTION 2
+//on initial load
 var myPath;
 var radialLineMaker = d3.radialLine();
 function drawRadialLine(){
@@ -72,29 +72,29 @@ function drawRadialLine(){
     .attr('stroke','white')
 }
 
-// d3.select("#slider").on("input", function() {
-//   update(+this.value);
-// });
+d3.select("#slider").on("input", function() {
+  update(+this.value);
+});
 // var radialLineMaker = d3.radialLine();
 
-// function update(val){
-//   var circScale = d3.scaleLinear()
-//     .domain([0, skyData.length])
-//     .range([0, Math.PI*2]);
+function update(val){
+  var circScale = d3.scaleLinear()
+    .domain([0, skyData.length])
+    .range([0, Math.PI*2]);
 
-//   radialLineMaker
-//     .angle(function(d,i) {
-//       return circScale(i);
-//     })
-//     .radius(function(d) {
-//       return val;
-//     });
-//   var radialLineData = radialLineMaker(skyData);
+  radialLineMaker
+    .angle(function(d,i) {
+      return circScale(i);
+    })
+    .radius(function(d) {
+      return val;
+    });
+  var radialLineData = radialLineMaker(skyData);
 
-//   myPath
-//     .attr('d', radialLineData)
-//     .attr('stroke','white')
-// }
+  myPath
+    .attr('d', radialLineData)
+    .attr('stroke','white')
+}
 
 
 

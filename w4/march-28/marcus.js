@@ -108,7 +108,7 @@ var sun = container.append("circle")
     .attr("fill", "#FFD644")
  //   .attr("stroke", "white")
     .attr("id", "sun");
-    
+
 container.selectAll("g.planet")
     .data(systemData)
     .enter()
@@ -227,7 +227,6 @@ function initZoom() {
   //   .duration(3000)
   //   .call(zoom.translateBy,0, h/2);
 }
-
 function update(val){
     var modelScale = val;
     sun

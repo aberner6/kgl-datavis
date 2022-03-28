@@ -37,7 +37,7 @@ var colorScale = d3.scaleLinear()
 	.range([0,255])
 var opaScale = d3.scaleLinear()
 	.domain([0, 100])
-	.range([0,1])
+	.range([.5,1])
 var windArray = [];
 var rotPos = [];
 mathias();
@@ -59,7 +59,7 @@ gElements
 		return d.name;
 	})
     .attr('r', function(d,i){
-    	return d.cloud;
+    	return 10//d.cloud;
     })
     .attr('cx', r)
     .attr('cy',r)

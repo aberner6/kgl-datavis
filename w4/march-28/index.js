@@ -96,9 +96,10 @@ function initZoom() {
   //   .call(zoom);
   d3.selectAll('svg')
     .transition()
-    .duration(4000)
+    .duration(2000)
     .call(zoom.scaleBy, 2)
     .transition()
-    .call(zoom.translateBy, w/2, h/2);
+    .duration(3000)
+    .call(zoom.translateBy,0, h/2);
 }
 

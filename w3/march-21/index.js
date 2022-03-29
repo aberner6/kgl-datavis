@@ -105,8 +105,9 @@ function updateData() {
 	}
 	console.log(partData)
 	index = index+inc;
-	addToVis();
 }
+  addToVis();
+
 //JUST PUT NEW DATA IN
 function updateVis() {
   var circShape = svg
@@ -126,16 +127,27 @@ function updateVis() {
 function addToVis() {
   var circShape = svg
     .selectAll('.circle')
-    .data(partData)
+    .data(wholeData)
     .join('circle')
     .attr('cy', h/2)
-    .transition()
-    .duration(3000)
-    .attr('cx', function(d) {
-      return w/2+(d*10);
-    })
+    .attr('cx',0)
     .attr('r', rad)
     .attr('fill','white')
+    .style("transition", "transform 0.1s ease-out")
+  //   .transition()
+  //   .duration(1000)
+  //   .ease(d3.easePolyIn)
+  //   .attr('cx',w/2)
+  // d3.selectAll('*')
+  //   .interrupt()
+  //   .transition()
+  //   .delay(2000)
+  //   .ease(d3.easeBounceOut)
+    // .ease(d3.easeBounceOut)
+    // .duration(3000)
+    // .attr('cx', function(d) {
+    //   return w/2+(d*10);
+    // })
 }
 
 
